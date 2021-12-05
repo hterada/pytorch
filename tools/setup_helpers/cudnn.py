@@ -39,7 +39,7 @@ if USE_CUDA and not check_negative_env_flag('USE_CUDNN'):
     for path in include_paths:
         if path is None or not os.path.exists(path):
             continue
-        include_file_path = os.path.join(path, 'cudnn.h')
+        include_file_path = os.path.join(path, 'cudnn_version.h')
         CUDNN_INCLUDE_VERSION = None
         if os.path.exists(include_file_path):
             CUDNN_INCLUDE_DIR = path
