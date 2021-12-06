@@ -9,7 +9,7 @@
 
 namespace at { namespace native { namespace sparse { namespace cuda {
 
-
+#if 0 // CUDA version >= 10.2
 std::string cusparseGetErrorString(cusparseStatus_t status) {
   switch(status)
   {
@@ -51,6 +51,7 @@ std::string cusparseGetErrorString(cusparseStatus_t status) {
       }
   }
 }
+#endif
 
 inline void CUSPARSE_CHECK(cusparseStatus_t status)
 {
