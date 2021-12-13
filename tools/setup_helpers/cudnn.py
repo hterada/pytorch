@@ -42,7 +42,7 @@ if USE_CUDA and not check_negative_env_flag('USE_CUDNN'):
         CUDNN_INCLUDE_VERSION = None
         l_headers = ['cudnn.h', 'cudnn_version.h']
         for header in l_headers:
-            include_file_path = os.path.join(path, 'cudnn.h')
+            include_file_path = os.path.join(path, header)
             if os.path.exists(include_file_path):
                 with open(include_file_path) as f:
                     for line in f:
