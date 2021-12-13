@@ -39,18 +39,21 @@ if USE_CUDA and not check_negative_env_flag('USE_CUDNN'):
     for path in include_paths:
         if path is None or not os.path.exists(path):
             continue
-        include_file_path = os.path.join(path, 'cudnn.h')
         CUDNN_INCLUDE_VERSION = None
-        if os.path.exists(include_file_path):
-            CUDNN_INCLUDE_DIR = path
-            with open(include_file_path) as f:
-                for line in f:
-                    if "#define CUDNN_MAJOR" in line:
-                        CUDNN_INCLUDE_VERSION = int(line.split()[-1])
-                        break
-            if CUDNN_INCLUDE_VERSION is None:
-                raise AssertionError("Could not find #define CUDNN_MAJOR in " + include_file_path)
-            break
+        l_headers = ['cudnn.h', 'cudnn_version.h']
+        for header in l_headers:
+            include_file_path = os.path.join(path, 'cudnn.h')
+            if os.path.exists(include_file_path):
+                with open(include_file_path) as f:
+                    for line in f:
+                        if "#define CUDNN_MAJOR" in line:
+                            CUDNN_INCLUDE_VERSION = int(line.split()[-1])
+                            CUDNN_INCLUDE_DIR = path
+                            break #Found
+
+        if CUDNN_INCLUDE_VERSION is None:
+            raise AssertionError("Could not find #define CUDNN_MAJOR in " + include_file_path)
+        break
 
     if CUDNN_INCLUDE_VERSION is None:
         pass
